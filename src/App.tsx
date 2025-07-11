@@ -1,21 +1,28 @@
+import { useState } from 'react';
+import { Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { MyButton } from './shared/components/MyButton';
-import { Text } from 'react-native';
 
 
 export default function App() {
+  const [state, setState] = useState('Teste');
+
+  console.log('render')
+
+
   return (
     <SafeAreaView>
-      <MyButton order={1}>
-        <Text>MyButton {1}</Text>
+      <MyButton order={1} onPress={() => setState('Teste 2')}>
+        <Text>MyButton {state}</Text>
       </MyButton>
+
 
       <MyButton>
-        <Text>MyButton {2}</Text>
+        <Text>MyButton</Text>
       </MyButton>
 
-      <MyButton onPress={() => console.log('Teste')} />
+      <MyButton onPress={() => console.log('teste')} />
     </SafeAreaView>
   );
 }
