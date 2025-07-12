@@ -1,8 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
-import { Button, Text } from 'react-native';
+import { Text, View } from 'react-native';
 
 import { Header } from '../shared/components/Header';
 import { TNavigationScreenProps } from '../Routes';
+import { Footer } from '../shared/components/Footer';
 
 
 export const HomePage = () => {
@@ -14,16 +15,10 @@ export const HomePage = () => {
       name={'Juca'}
     />
 
-    <Text style={{ fontFamily: 'extraBold' }}>Home</Text>
+    <View style={{ flex: 1 }} />
 
-    <Button
-      title='Go to Details'
-      onPress={() => navigation.navigate('detail', { rate: 3 })}
-    />
-
-    <Button
-      title='Go to Set User Name'
-      onPress={() => navigation.navigate('setUserName')}
-    />
+    <Footer>
+      <Text style={{ fontFamily: 'extraBold' }}>Home</Text>
+    </Footer>
   </>;
 }
