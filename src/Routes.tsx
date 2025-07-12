@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { SetUserNamePage } from './screens/SetUseName';
 import { DetailPage } from './screens/Detail';
 import { HomePage } from './screens/Home';
+import { theme } from './shared/themes/Theme';
 
 
 
@@ -22,8 +23,13 @@ export const AppRoutes = () => {
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName='home'
-        screenOptions={{ headerShown: false }}
         screenLayout={({ children }) => <SafeAreaView>{children}</SafeAreaView>}
+        screenOptions={{
+          headerShown: false,
+          contentStyle: {
+            backgroundColor: theme.colors.background,
+          },
+        }}
       >
         <Stack.Screen name="home" component={HomePage} />
 

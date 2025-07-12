@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { Button, Text } from 'react-native';
 
+import { Header } from '../shared/components/Header';
 import { TNavigationScreenProps } from '../Routes';
 
 
@@ -9,6 +10,10 @@ export const HomePage = () => {
 
 
   return <>
+    <Header
+      name={'Juca'}
+    />
+
     <Text style={{ fontFamily: 'extraBold' }}>Home</Text>
 
     <Button
