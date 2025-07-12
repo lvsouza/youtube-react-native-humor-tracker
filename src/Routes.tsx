@@ -1,10 +1,10 @@
 import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { NavigationContainer, RouteProp } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { SetUserNamePage } from './screens/SetUseName';
 import { DetailPage } from './screens/Detail';
 import { HomePage } from './screens/Home';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 
