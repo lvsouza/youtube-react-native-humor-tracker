@@ -1,9 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Button, Text } from 'react-native';
 
+import { TNavigationScreenProps } from '../Routes';
 
-type TNavigationScreenProps = NativeStackNavigationProp<Record<string, any>>;
 
 export const HomePage = () => {
   const navigation = useNavigation<TNavigationScreenProps>();
