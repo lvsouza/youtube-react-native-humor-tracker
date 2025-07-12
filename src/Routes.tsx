@@ -4,6 +4,7 @@ import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import { SetUserNamePage } from './screens/SetUseName';
 import { DetailPage } from './screens/Detail';
 import { HomePage } from './screens/Home';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 
@@ -19,10 +20,30 @@ export const AppRoutes = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='home'>
+      <Stack.Navigator
+        initialRouteName='home'
+        screenOptions={{ headerShown: false }}
+        screenLayout={({ children }) => <SafeAreaView>{children}</SafeAreaView>}
+      >
         <Stack.Screen name="home" component={HomePage} />
-        <Stack.Screen name="detail" component={DetailPage} />
-        <Stack.Screen name="setUserName" component={SetUserNamePage} />
+
+        <Stack.Group
+          screenOptions={{
+            sheetCornerRadius: 24,
+            presentation: 'formSheet',
+          }}
+        >
+          <Stack.Screen
+            name="detail"
+            component={DetailPage}
+            options={{ sheetAllowedDetents: [0.8, 0.95] }}
+          />
+          <Stack.Screen
+            name="setUserName"
+            component={SetUserNamePage}
+            options={{ sheetAllowedDetents: [0.4, 0.6] }}
+          />
+        </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
   );
