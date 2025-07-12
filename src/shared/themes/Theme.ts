@@ -20,9 +20,9 @@ export const theme = {
       body: 14,
     },
     family: {
-      regular: '',
-      bold: '',
-      italic: '',
+      regular: 'regular',
+      bold: 'extraBold',
+      italic: 'regularItalic',
     },
   },
   shadows: {

@@ -9,7 +9,7 @@ export const HomePage = () => {
 
 
   return <>
-    <Text>Home</Text>
+    <Text style={{ fontFamily: 'extraBold' }}>Home</Text>
 
     <Button
       title='Go to Details'
