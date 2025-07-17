@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { BaseInput } from '../shared/components/BaseInput';
+import { Button } from '../shared/components/Button';
 import { theme } from '../shared/themes/Theme';
 
 
@@ -14,18 +15,26 @@ export const SetUserNamePage = () => {
 
       <BaseInput label='Nome'>
         <TextInput
+          autoFocus
           style={styles.input}
           placeholder='Escreva seu nome aqui...'
           placeholderTextColor={theme.colors.textPlaceholder}
         />
       </BaseInput>
+
+      <View style={{ flex: 1 }} />
+
+      <Button
+        title='Salvar'
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    gap: 8
+    gap: 8,
+    flex: 1,
   },
   title: {
     textAlign: 'center',

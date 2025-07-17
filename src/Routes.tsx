@@ -51,6 +51,7 @@ export const AppRoutes = () => {
               style={{
                 flex: 1,
                 padding: 16,
+                paddingBottom: 16,
                 backgroundColor: theme.colors.paper,
               }}
             >
@@ -66,7 +67,7 @@ export const AppRoutes = () => {
           <Stack.Screen
             name="setUserName"
             component={SetUserNamePage}
-            options={{ sheetAllowedDetents: [0.4, 0.6] }}
+            options={{ sheetAllowedDetents: [0.4] }}
           />
         </Stack.Group>
       </Stack.Navigator>
