@@ -7,6 +7,7 @@ import { Header } from '../shared/components/Header';
 import { Footer } from '../shared/components/Footer';
 import { theme } from '../shared/themes/Theme';
 import { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export const HomePage = () => {
@@ -22,6 +23,14 @@ export const HomePage = () => {
       setName(params?.newName || '');
     }
   }, [params?.newName]);
+
+  useEffect(() => {
+    AsyncStorage
+      .getItem('user-name')
+      .then(value => {
+        setName(value || '');
+      })
+  }, []);
 
 
   return <>
