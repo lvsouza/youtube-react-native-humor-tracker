@@ -5,6 +5,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import { TNavigationScreenProps, TRouteProps } from '../Routes';
 import { BaseInput } from '../shared/components/BaseInput';
 import { theme } from '../shared/themes/Theme';
+import { Button } from '../shared/components/Button';
 
 
 export const DetailPage = () => {
@@ -74,6 +75,27 @@ export const DetailPage = () => {
             style={{ ...styles.footerInput, ...styles.footerInputArea }}
           />
         </BaseInput>
+
+        <View style={{ flex: 1 }} />
+
+        <View style={styles.actionsContainer}>
+          <Button variant='outlined' color={theme.colors.error}>
+            <AntDesign
+              size={18}
+              name={"delete"}
+              color={theme.colors.error}
+            />
+          </Button>
+          <Button
+            grow
+            title='Cancelar'
+            variant='outlined'
+          />
+          <Button
+            grow
+            title='Salvar'
+          />
+        </View>
       </View>
     </>
   );
@@ -81,7 +103,8 @@ export const DetailPage = () => {
 
 const styles = StyleSheet.create({
   footerContainer: {
-    gap: 8
+    gap: 8,
+    flex: 1,
   },
   footerTitle: {
     textAlign: 'center',
@@ -108,4 +131,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     justifyContent: 'center',
   },
+
+
+  actionsContainer: {
+    gap: 8,
+    alignItems: 'center',
+    flexDirection: 'row',
+  }
 });

@@ -5,22 +5,42 @@ import { theme } from '../themes/Theme';
 
 interface IButtonProps {
   title?: string;
+  color?: string;
+  grow?: boolean;
   onPress?: () => void;
   children?: React.ReactNode;
+  variant?: 'contained' | 'outlined';
 }
-export const Button = ({ children, title, onPress }: IButtonProps) => {
-
-
+export const Button = ({ children, title, grow, color, variant = 'contained', onPress }: IButtonProps) => {
   return (
     <Pressable
       onPress={onPress}
       style={({ pressed }) => ({
         ...styles.button,
-        ...(pressed ? styles.buttonPressed : {})
+        ...(grow ? { flexGrow: 1 } : {}),
+        ...(pressed ? styles.buttonPressed : {}),
+        ...(variant === 'contained' ? styles.buttonContained : {}),
+        ...(variant === 'outlined'
+          ? {
+            ...styles.buttonOutlined,
+            ...(color && { borderColor: color })
+          }
+          : {}
+        ),
       })}
     >
       {children}
-      {!children && <Text style={styles.buttonText}>{title}</Text>}
+      {!children && (
+        <Text
+          style={{
+            ...styles.buttonText,
+            ...(variant === 'contained' ? styles.buttonContainedText : {}),
+            ...(variant === 'outlined' ? styles.buttonOutlinedText : {}),
+          }}
+        >
+          {title}
+        </Text>
+      )}
     </Pressable>
   );
 }
@@ -31,14 +51,27 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: theme.colors.primary
   },
   buttonPressed: {
     opacity: 0.8,
   },
+  buttonContained: {
+    backgroundColor: theme.colors.primary,
+  },
+  buttonOutlined: {
+    padding: 10,
+    borderWidth: 2,
+    borderColor: theme.colors.primary,
+  },
   buttonText: {
     color: theme.colors.primaryText,
     fontSize: theme.fonts.sizes.body,
-    fontFamily: theme.fonts.family.regular,
-  }
+    fontFamily: theme.fonts.family.bold,
+  },
+  buttonContainedText: {
+    color: theme.colors.primaryText,
+  },
+  buttonOutlinedText: {
+    color: theme.colors.primary,
+  },
 });
