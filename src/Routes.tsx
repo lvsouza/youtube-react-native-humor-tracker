@@ -4,8 +4,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { SetUserNamePage } from './screens/SetUseName';
 import { DetailPage } from './screens/Detail';
-import { HomePage } from './screens/Home';
 import { theme } from './shared/themes/Theme';
+import { HomePage } from './screens/Home';
 
 
 
@@ -41,7 +41,22 @@ export const AppRoutes = () => {
           screenOptions={{
             sheetCornerRadius: 24,
             presentation: 'formSheet',
+            contentStyle: {
+              height: '100%'
+            }
           }}
+          screenLayout={({ children }) => (
+            <SafeAreaView
+              edges={['left', 'right']}
+              style={{
+                flex: 1,
+                padding: 16,
+                backgroundColor: theme.colors.paper,
+              }}
+            >
+              {children}
+            </SafeAreaView>
+          )}
         >
           <Stack.Screen
             name="detail"
