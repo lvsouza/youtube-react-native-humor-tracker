@@ -1,6 +1,6 @@
 import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { NavigationContainer, RouteProp } from '@react-navigation/native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { SetUserNamePage } from './screens/SetUseName';
 import { DetailPage } from './screens/Detail';
@@ -10,9 +10,9 @@ import { HomePage } from './screens/Home';
 
 
 type TScreenDefinitions = {
-  home: undefined;
   setUserName: undefined;
   detail: { rate: number };
+  home: { newName: string } | undefined;
 }
 
 const Stack = createNativeStackNavigator<TScreenDefinitions>();
@@ -51,7 +51,6 @@ export const AppRoutes = () => {
               style={{
                 flex: 1,
                 padding: 16,
-                paddingBottom: 16,
                 backgroundColor: theme.colors.paper,
               }}
             >

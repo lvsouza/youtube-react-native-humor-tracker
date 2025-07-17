@@ -1,21 +1,31 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 
+import { TNavigationScreenProps, TRouteProps } from '../Routes';
 import { BaseInput } from '../shared/components/BaseInput';
 import { Header } from '../shared/components/Header';
 import { Footer } from '../shared/components/Footer';
-import { TNavigationScreenProps } from '../Routes';
 import { theme } from '../shared/themes/Theme';
+import { useEffect, useState } from 'react';
 
 
 export const HomePage = () => {
   const navigation = useNavigation<TNavigationScreenProps>();
+  const { params } = useRoute<TRouteProps<'home'>>();
+
+
+  const [name, setName] = useState('');
+
+
+  useEffect(() => {
+    if (params?.newName) {
+      setName(params?.newName || '');
+    }
+  }, [params?.newName]);
 
 
   return <>
-    <Header
-      name={'Juca'}
-    />
+    <Header name={name} />
 
     <View style={{ flex: 1 }} />
 

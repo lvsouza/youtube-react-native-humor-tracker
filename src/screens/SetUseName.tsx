@@ -1,14 +1,23 @@
+import { useState } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
 
 import { BaseInput } from '../shared/components/BaseInput';
 import { Button } from '../shared/components/Button';
+import { TNavigationScreenProps } from '../Routes';
 import { theme } from '../shared/themes/Theme';
 
 
 export const SetUserNamePage = () => {
+  const navigation = useNavigation<TNavigationScreenProps>();
+  const insets = useSafeAreaInsets();
+
+  const [name, setName] = useState('');
+
 
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, paddingBottom: insets.bottom }}>
       <Text style={styles.title}>
         Qual é o seu nome?
       </Text>
@@ -16,7 +25,9 @@ export const SetUserNamePage = () => {
       <BaseInput label='Nome'>
         <TextInput
           autoFocus
+          value={name}
           style={styles.input}
+          onChangeText={(text) => setName(text)}
           placeholder='Escreva seu nome aqui...'
           placeholderTextColor={theme.colors.textPlaceholder}
         />
@@ -26,6 +37,7 @@ export const SetUserNamePage = () => {
 
       <Button
         title='Salvar'
+        onPress={() => navigation.popTo('home', { newName: name })}
       />
     </View>
   );
