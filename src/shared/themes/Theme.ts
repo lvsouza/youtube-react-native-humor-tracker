@@ -22,7 +22,7 @@ export const theme = {
     family: {
       regular: 'regular',
       bold: 'extraBold',
-      italic: 'regularItalic',
+      italic: 'mediumItalic',
     },
   },
   shadows: {
