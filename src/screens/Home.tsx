@@ -6,6 +6,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 
 import { TNavigationScreenProps, TRouteProps } from '../Routes';
 import { BaseInput } from '../shared/components/BaseInput';
+import { ListItem } from '../shared/components/ListItem';
 import { Header } from '../shared/components/Header';
 import { Footer } from '../shared/components/Footer';
 import { theme } from '../shared/themes/Theme';
@@ -38,11 +39,39 @@ export const HomePage = () => {
     <>
       <Header name={name} />
 
-      <View style={styles.emptyContentContainer}>
+      {/* <View style={styles.emptyContentContainer}>
         <Text style={styles.emptyContentText}>
           Você ainda não{'\n'}
           registrou seu humor!
         </Text>
+      </View> */}
+
+      <View style={styles.listContent}>
+        <ListItem
+          rate={1}
+          datetime=''
+          description='Hoje meu dia está, mais ou menos... Peguei muito transito para o trabalho.'
+        />
+        <ListItem
+          rate={2}
+          datetime=''
+          description='Hoje meu dia está, mais ou menos... Peguei muito transito para o trabalho.'
+        />
+        <ListItem
+          rate={3}
+          datetime=''
+          description='Hoje meu dia está, mais ou menos... Peguei muito transito para o trabalho.'
+        />
+        <ListItem
+          rate={4}
+          datetime=''
+          description='Hoje meu dia está, mais ou menos... Peguei muito transito para o trabalho.'
+        />
+        <ListItem
+          rate={5}
+          datetime=''
+          description='Hoje meu dia está, mais ou menos... Peguei muito transito para o trabalho.'
+        />
       </View>
 
       <Footer>
@@ -124,5 +153,12 @@ const styles = StyleSheet.create({
     color: theme.colors.textPlaceholder,
     fontSize: theme.fonts.sizes.subtitle,
     fontFamily: theme.fonts.family.italic,
-  }
+  },
+
+  listContent: {
+    gap: 8,
+    flex: 1,
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+  },
 });

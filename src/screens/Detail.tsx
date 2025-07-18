@@ -2,17 +2,19 @@ import { useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
 import { TNavigationScreenProps, TRouteProps } from '../Routes';
 import { BaseInput } from '../shared/components/BaseInput';
-import { theme } from '../shared/themes/Theme';
 import { Button } from '../shared/components/Button';
+import { theme } from '../shared/themes/Theme';
 
 
 export const DetailPage = () => {
   const navigation = useNavigation<TNavigationScreenProps>();
   const { params } = useRoute<TRouteProps<'detail'>>();
+  const insets = useSafeAreaInsets();
 
 
   const [showDateTimePicker, setShowDateTimePicker] = useState(false);
@@ -22,105 +24,103 @@ export const DetailPage = () => {
 
 
   return (
-    <>
-      <View style={styles.footerContainer}>
-        <Text style={styles.footerTitle}>
-          Como está seu humor hoje?
-        </Text>
+    <View style={{ ...styles.footerContainer, paddingBottom: insets.bottom }}>
+      <Text style={styles.footerTitle}>
+        Como está seu humor hoje?
+      </Text>
 
-        <View style={styles.footerStarContainer}>
-          <TouchableOpacity onPress={() => setRate(1)}>
-            <AntDesign
-              size={36}
-              name={rate >= 1 ? "star" : "staro"}
-              color={rate >= 1 ? theme.colors.highlight : theme.colors.textPlaceholder}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setRate(2)}>
-            <AntDesign
-              size={36}
-              name={rate >= 2 ? "star" : "staro"}
-              color={rate >= 2 ? theme.colors.highlight : theme.colors.textPlaceholder}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setRate(3)}>
-            <AntDesign
-              size={36}
-              name={rate >= 3 ? "star" : "staro"}
-              color={rate >= 3 ? theme.colors.highlight : theme.colors.textPlaceholder}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setRate(4)}>
-            <AntDesign
-              size={36}
-              name={rate >= 4 ? "star" : "staro"}
-              color={rate >= 4 ? theme.colors.highlight : theme.colors.textPlaceholder}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setRate(5)}>
-            <AntDesign
-              size={36}
-              name={rate >= 5 ? "star" : "staro"}
-              color={rate >= 5 ? theme.colors.highlight : theme.colors.textPlaceholder}
-            />
-          </TouchableOpacity>
-        </View>
-
-        <BaseInput label='Data e hora' asButton onPress={() => setShowDateTimePicker(true)}>
-          <TextInput
-            value={date.toLocaleString('pt-Br')}
-            editable={false}
-            pointerEvents='none'
-            style={styles.footerInput}
-            placeholder='Escreva seu nome aqui...'
-            placeholderTextColor={theme.colors.textPlaceholder}
+      <View style={styles.footerStarContainer}>
+        <TouchableOpacity onPress={() => setRate(1)}>
+          <AntDesign
+            size={36}
+            name={rate >= 1 ? "star" : "staro"}
+            color={rate >= 1 ? theme.colors.highlight : theme.colors.textPlaceholder}
           />
-        </BaseInput>
-        <DateTimePickerModal
-          date={date}
-          mode="datetime"
-          isVisible={showDateTimePicker}
-          onCancel={() => setShowDateTimePicker(false)}
-          onConfirm={(date) => { setShowDateTimePicker(false); setDate(date) }}
-        />
-
-        <BaseInput label='Descreva mais sobre esse humor'>
-          <TextInput
-            multiline
-            numberOfLines={16}
-            value={description}
-            onChangeText={setDescription}
-            placeholder='Escreva seu nome aqui...'
-            placeholderTextColor={theme.colors.textPlaceholder}
-            style={{ ...styles.footerInput, ...styles.footerInputArea }}
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => setRate(2)}>
+          <AntDesign
+            size={36}
+            name={rate >= 2 ? "star" : "staro"}
+            color={rate >= 2 ? theme.colors.highlight : theme.colors.textPlaceholder}
           />
-        </BaseInput>
-
-        <View style={{ flex: 1 }} />
-
-        <View style={styles.actionsContainer}>
-          {params.id && (
-            <Button variant='outlined' color={theme.colors.error}>
-              <AntDesign
-                size={18}
-                name="delete"
-                color={theme.colors.error}
-              />
-            </Button>
-          )}
-          <Button
-            grow
-            title='Cancelar'
-            variant='outlined'
-            onPress={() => navigation.goBack()}
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => setRate(3)}>
+          <AntDesign
+            size={36}
+            name={rate >= 3 ? "star" : "staro"}
+            color={rate >= 3 ? theme.colors.highlight : theme.colors.textPlaceholder}
           />
-          <Button
-            grow
-            title='Salvar'
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => setRate(4)}>
+          <AntDesign
+            size={36}
+            name={rate >= 4 ? "star" : "staro"}
+            color={rate >= 4 ? theme.colors.highlight : theme.colors.textPlaceholder}
           />
-        </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => setRate(5)}>
+          <AntDesign
+            size={36}
+            name={rate >= 5 ? "star" : "staro"}
+            color={rate >= 5 ? theme.colors.highlight : theme.colors.textPlaceholder}
+          />
+        </TouchableOpacity>
       </View>
-    </>
+
+      <BaseInput label='Data e hora' asButton onPress={() => setShowDateTimePicker(true)}>
+        <TextInput
+          value={date.toLocaleString('pt-Br')}
+          editable={false}
+          pointerEvents='none'
+          style={styles.footerInput}
+          placeholder='Selecione uma data e hora...'
+          placeholderTextColor={theme.colors.textPlaceholder}
+        />
+      </BaseInput>
+      <DateTimePickerModal
+        date={date}
+        mode="datetime"
+        isVisible={showDateTimePicker}
+        onCancel={() => setShowDateTimePicker(false)}
+        onConfirm={(date) => { setShowDateTimePicker(false); setDate(date) }}
+      />
+
+      <BaseInput label='Descreva mais sobre esse humor'>
+        <TextInput
+          multiline
+          numberOfLines={16}
+          value={description}
+          onChangeText={setDescription}
+          placeholder='Escreva uma nota...'
+          placeholderTextColor={theme.colors.textPlaceholder}
+          style={{ ...styles.footerInput, ...styles.footerInputArea }}
+        />
+      </BaseInput>
+
+      <View style={{ flex: 1 }} />
+
+      <View style={styles.actionsContainer}>
+        {params.id && (
+          <Button variant='outlined' color={theme.colors.error}>
+            <AntDesign
+              size={18}
+              name="delete"
+              color={theme.colors.error}
+            />
+          </Button>
+        )}
+        <Button
+          grow
+          title='Cancelar'
+          variant='outlined'
+          onPress={() => navigation.goBack()}
+        />
+        <Button
+          grow
+          title='Salvar'
+        />
+      </View>
+    </View>
   );
 }
 
