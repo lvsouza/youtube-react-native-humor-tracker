@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import AntDesign from '@expo/vector-icons/AntDesign';
 
 import { TNavigationScreenProps, TRouteProps } from '../Routes';
@@ -14,9 +15,10 @@ export const DetailPage = () => {
   const { params } = useRoute<TRouteProps<'detail'>>();
 
 
+  const [showDateTimePicker, setShowDateTimePicker] = useState(false);
   const [description, setDescription] = useState('');
   const [rate, setRate] = useState(params.rate);
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState(new Date());
 
 
   return (
@@ -64,15 +66,23 @@ export const DetailPage = () => {
           </TouchableOpacity>
         </View>
 
-        <BaseInput label='Data e hora'>
+        <BaseInput label='Data e hora' asButton onPress={() => setShowDateTimePicker(true)}>
           <TextInput
-            value={date}
-            onChangeText={setDate}
+            value={date.toLocaleString('pt-Br')}
+            editable={false}
+            pointerEvents='none'
             style={styles.footerInput}
             placeholder='Escreva seu nome aqui...'
             placeholderTextColor={theme.colors.textPlaceholder}
           />
         </BaseInput>
+        <DateTimePickerModal
+          date={date}
+          mode="datetime"
+          isVisible={showDateTimePicker}
+          onCancel={() => setShowDateTimePicker(false)}
+          onConfirm={(date) => { setShowDateTimePicker(false); setDate(date) }}
+        />
 
         <BaseInput label='Descreva mais sobre esse humor'>
           <TextInput
