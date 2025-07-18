@@ -4,6 +4,7 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-nativ
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { v4 as uuid } from 'uuid';
 
 import { TNavigationScreenProps, TRouteProps } from '../Routes';
 import { BaseInput } from '../shared/components/BaseInput';
@@ -18,9 +19,22 @@ export const DetailPage = () => {
 
 
   const [showDateTimePicker, setShowDateTimePicker] = useState(false);
+  const [datetime, setDatetime] = useState(new Date());
   const [description, setDescription] = useState('');
   const [rate, setRate] = useState(params.rate);
-  const [date, setDate] = useState(new Date());
+
+
+  const handleSave = () => {
+
+    navigation.popTo('home', {
+      newItem: {
+        rate,
+        id: uuid(),
+        description,
+        datetime: datetime.getTime(),
+      },
+    });
+  }
 
 
   return (
@@ -69,7 +83,7 @@ export const DetailPage = () => {
 
       <BaseInput label='Data e hora' asButton onPress={() => setShowDateTimePicker(true)}>
         <TextInput
-          value={date.toLocaleString('pt-Br')}
+          value={datetime.toLocaleString('pt-Br')}
           editable={false}
           pointerEvents='none'
           style={styles.footerInput}
@@ -78,11 +92,11 @@ export const DetailPage = () => {
         />
       </BaseInput>
       <DateTimePickerModal
-        date={date}
+        date={datetime}
         mode="datetime"
         isVisible={showDateTimePicker}
         onCancel={() => setShowDateTimePicker(false)}
-        onConfirm={(date) => { setShowDateTimePicker(false); setDate(date) }}
+        onConfirm={(date) => { setShowDateTimePicker(false); setDatetime(date) }}
       />
 
       <BaseInput label='Descreva mais sobre esse humor'>
@@ -118,6 +132,7 @@ export const DetailPage = () => {
         <Button
           grow
           title='Salvar'
+          onPress={handleSave}
         />
       </View>
     </View>

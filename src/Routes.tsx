@@ -8,11 +8,17 @@ import { theme } from './shared/themes/Theme';
 import { HomePage } from './screens/Home';
 
 
+type THumorItem = {
+  id: string;
+  rate: number;
+  datetime: number;
+  description: string;
+}
 
 type TScreenDefinitions = {
   setUserName: undefined;
   detail: { rate: number, id?: string };
-  home: { newName: string } | undefined;
+  home: { newName?: string, newItem?: THumorItem } | undefined;
 }
 
 const Stack = createNativeStackNavigator<TScreenDefinitions>();

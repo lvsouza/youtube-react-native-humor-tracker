@@ -15,7 +15,7 @@ import { theme } from '../shared/themes/Theme';
 interface IListItem {
   id: string;
   rate: number;
-  datetime: string;
+  datetime: number;
   description: string;
 }
 
@@ -24,17 +24,8 @@ export const HomePage = () => {
   const { params } = useRoute<TRouteProps<'home'>>();
 
 
+  const [list, setList] = useState<IListItem[]>([]);
   const [name, setName] = useState('');
-  const [list, setList] = useState<IListItem[]>([
-    { id: '1', rate: 1, datetime: '', description: 'Hoje meu dia está, mais ou menos... Peguei muito transito para o trabalho.' },
-    { id: '2', rate: 2, datetime: '', description: 'Hoje meu dia está, mais ou menos... Peguei muito transito para o trabalho.' },
-    { id: '3', rate: 3, datetime: '', description: 'Hoje meu dia está, mais ou menos... Peguei muito transito para o trabalho.' },
-    { id: '4', rate: 4, datetime: '', description: 'Hoje meu dia está, mais ou menos... Peguei muito transito para o trabalho.' },
-    { id: '5', rate: 5, datetime: '', description: 'Hoje meu dia está, mais ou menos... Peguei muito transito para o trabalho.' },
-    { id: '6', rate: 5, datetime: '', description: 'Hoje meu dia está, mais ou menos... Peguei muito transito para o trabalho.' },
-    { id: '7', rate: 5, datetime: '', description: 'Hoje meu dia está, mais ou menos... Peguei muito transito para o trabalho.' },
-    { id: '8', rate: 5, datetime: '', description: 'Hoje meu dia está, mais ou menos... Peguei muito transito para o trabalho.' },
-  ]);
 
 
   useEffect(() => {
@@ -42,6 +33,21 @@ export const HomePage = () => {
       setName(params?.newName || '');
     }
   }, [params?.newName]);
+
+  useEffect(() => {
+    if (params?.newItem) {
+      setList(oldList => {
+        if (!params.newItem) return oldList;
+
+        const index = oldList.findIndex(item => item.id === params.newItem?.id)
+        if (index < 0) return [...oldList, params.newItem];
+
+        oldList.splice(index, 1, params.newItem);
+
+        return [...oldList];
+      });
+    }
+  }, [params?.newItem]);
 
   useEffect(() => {
     AsyncStorage
