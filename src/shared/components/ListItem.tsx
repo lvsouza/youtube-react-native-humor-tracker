@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
 import { theme } from '../themes/Theme';
@@ -8,12 +8,17 @@ interface IListItemProps {
   rate: number;
   datetime: number;
   description: string;
+  onPress(): void;
 }
-export const ListItem = ({ rate, datetime, description }: IListItemProps) => {
+export const ListItem = ({ rate, datetime, description, onPress }: IListItemProps) => {
 
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      onPress={onPress}
+      activeOpacity={0.6}
+      style={styles.container}
+    >
       <Text style={styles.dateTimeText}>
         18/07/2025 às 13:00
       </Text>
@@ -46,7 +51,7 @@ export const ListItem = ({ rate, datetime, description }: IListItemProps) => {
       <Text style={styles.descriptionText}>
         {description}
       </Text>
-    </View>
+    </TouchableOpacity>
   );
 }
 

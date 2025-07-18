@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -22,14 +22,31 @@ export const DetailPage = () => {
   const [showDateTimePicker, setShowDateTimePicker] = useState(false);
   const [datetime, setDatetime] = useState(new Date());
   const [description, setDescription] = useState('');
-  const [rate, setRate] = useState(params.rate);
+  const [rate, setRate] = useState(params.rate || 1);
+
+
+  useEffect(() => {
+    if (params.id) {
+      AsyncStorage
+        .getItem('humor-items')
+        .then(itemsAsString => !itemsAsString ? [] : JSON.parse(itemsAsString) as any[])
+        .then(items => {
+          const itemToUpdate = items.find(item => item.id === params.id);
+          if (!itemToUpdate) return;
+
+          setRate(itemToUpdate.rate);
+          setDescription(itemToUpdate.description);
+          setDatetime(new Date(itemToUpdate.datetime));
+        });
+    }
+  }, [params.id]);
 
 
   const handleSave = async () => {
-    const newItem = {
+    const newItemOrUpdated = {
       rate,
-      id: uuid(),
       description,
+      id: params.id || uuid(),
       datetime: datetime.getTime(),
     };
 
@@ -38,14 +55,39 @@ export const DetailPage = () => {
         .getItem('humor-items')
         .then(itemsAsString => !itemsAsString ? [] : JSON.parse(itemsAsString) as any[]);
 
-      items.unshift(newItem);
+      if (params.id) {
+        const index = items.findIndex(item => item.id === params.id);
+        if (index < 0) {
+          items.unshift(newItemOrUpdated);
+          return;
+        }
+
+        items.splice(index, 1, newItemOrUpdated);
+      } else {
+        items.unshift(newItemOrUpdated);
+      }
 
       await AsyncStorage.setItem('humor-items', JSON.stringify(items));
 
-      navigation.popTo('home', { newItem });
+      navigation.popTo('home', { newItem: newItemOrUpdated });
     } catch (e) {
       // saving error
     }
+  }
+
+  const handleDelete = async () => {
+    const items = await AsyncStorage
+      .getItem('humor-items')
+      .then(itemsAsString => !itemsAsString ? [] : JSON.parse(itemsAsString) as any[]);
+
+    const index = items.findIndex(item => item.id === params.id);
+
+    items.splice(index, 1);
+
+
+    await AsyncStorage.setItem('humor-items', JSON.stringify(items));
+
+    navigation.popTo('home', { idDeleted: params.id });
   }
 
 
@@ -127,7 +169,7 @@ export const DetailPage = () => {
 
       <View style={styles.actionsContainer}>
         {params.id && (
-          <Button variant='outlined' color={theme.colors.error}>
+          <Button variant='outlined' color={theme.colors.error} onPress={handleDelete}>
             <AntDesign
               size={18}
               name="delete"

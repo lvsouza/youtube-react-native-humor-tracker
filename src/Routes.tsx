@@ -17,8 +17,8 @@ type THumorItem = {
 
 type TScreenDefinitions = {
   setUserName: undefined;
-  detail: { rate: number, id?: string };
-  home: { newName?: string, newItem?: THumorItem } | undefined;
+  detail: { rate?: number, id?: string };
+  home: { newName?: string, idDeleted?: string, newItem?: THumorItem } | undefined;
 }
 
 const Stack = createNativeStackNavigator<TScreenDefinitions>();

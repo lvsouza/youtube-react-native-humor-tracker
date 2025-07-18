@@ -50,6 +50,21 @@ export const HomePage = () => {
   }, [params?.newItem]);
 
   useEffect(() => {
+    if (params?.idDeleted) {
+      setList(oldList => {
+        if (!params?.idDeleted) return oldList;
+
+        const index = oldList.findIndex(item => item.id === params?.idDeleted)
+        if (index < 0) return oldList;
+
+        oldList.splice(index, 1);
+
+        return [...oldList];
+      });
+    }
+  }, [params?.idDeleted]);
+
+  useEffect(() => {
     AsyncStorage
       .getItem('user-name')
       .then(value => {
@@ -78,6 +93,7 @@ export const HomePage = () => {
             rate={item.rate}
             datetime={item.datetime}
             description={item.description}
+            onPress={() => navigation.navigate('detail', { id: item.id })}
           />
         )}
         ListEmptyComponent={(
