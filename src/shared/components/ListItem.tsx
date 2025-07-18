@@ -6,7 +6,7 @@ import { theme } from '../themes/Theme';
 
 interface IListItemProps {
   rate: number;
-  datetime: string;
+  datetime: number;
   description: string;
 }
 export const ListItem = ({ rate, datetime, description }: IListItemProps) => {

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { v4 as uuid } from 'uuid';
@@ -24,16 +25,27 @@ export const DetailPage = () => {
   const [rate, setRate] = useState(params.rate);
 
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    const newItem = {
+      rate,
+      id: uuid(),
+      description,
+      datetime: datetime.getTime(),
+    };
 
-    navigation.popTo('home', {
-      newItem: {
-        rate,
-        id: uuid(),
-        description,
-        datetime: datetime.getTime(),
-      },
-    });
+    try {
+      const items = await AsyncStorage
+        .getItem('humor-items')
+        .then(itemsAsString => !itemsAsString ? [] : JSON.parse(itemsAsString) as any[]);
+
+      items.unshift(newItem);
+
+      await AsyncStorage.setItem('humor-items', JSON.stringify(items));
+
+      navigation.popTo('home', { newItem });
+    } catch (e) {
+      // saving error
+    }
   }
 
 
