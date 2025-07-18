@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { v4 as uuid } from 'uuid';
+import { format } from 'date-fns';
 
 import { TNavigationScreenProps, TRouteProps } from '../Routes';
 import { BaseInput } from '../shared/components/BaseInput';
@@ -137,11 +138,11 @@ export const DetailPage = () => {
 
       <BaseInput label='Data e hora' asButton onPress={() => setShowDateTimePicker(true)}>
         <TextInput
-          value={datetime.toLocaleString('pt-Br')}
           editable={false}
           pointerEvents='none'
           style={styles.footerInput}
           placeholder='Selecione uma data e hora...'
+          value={format(datetime, "dd/MM/yyyy 'às' HH:mm")}
           placeholderTextColor={theme.colors.textPlaceholder}
         />
       </BaseInput>

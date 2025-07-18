@@ -1,5 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { format } from 'date-fns';
 
 import { theme } from '../themes/Theme';
 
@@ -20,7 +21,7 @@ export const ListItem = ({ rate, datetime, description, onPress }: IListItemProp
       style={styles.container}
     >
       <Text style={styles.dateTimeText}>
-        18/07/2025 às 13:00
+        {format(new Date(datetime), "dd/MM/yyyy 'às' HH:mm")}
       </Text>
 
       <View style={styles.starsContainer}>
@@ -48,9 +49,11 @@ export const ListItem = ({ rate, datetime, description, onPress }: IListItemProp
         ))}
       </View>
 
-      <Text style={styles.descriptionText}>
-        {description}
-      </Text>
+      {description && (
+        <Text style={styles.descriptionText} numberOfLines={2}>
+          {description}
+        </Text>
+      )}
     </TouchableOpacity>
   );
 }
