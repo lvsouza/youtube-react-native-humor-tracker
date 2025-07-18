@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -12,12 +12,29 @@ import { Footer } from '../shared/components/Footer';
 import { theme } from '../shared/themes/Theme';
 
 
+interface IListItem {
+  id: string;
+  rate: number;
+  datetime: string;
+  description: string;
+}
+
 export const HomePage = () => {
   const navigation = useNavigation<TNavigationScreenProps>();
   const { params } = useRoute<TRouteProps<'home'>>();
 
 
   const [name, setName] = useState('');
+  const [list, setList] = useState<IListItem[]>([
+    { id: '1', rate: 1, datetime: '', description: 'Hoje meu dia está, mais ou menos... Peguei muito transito para o trabalho.' },
+    { id: '2', rate: 2, datetime: '', description: 'Hoje meu dia está, mais ou menos... Peguei muito transito para o trabalho.' },
+    { id: '3', rate: 3, datetime: '', description: 'Hoje meu dia está, mais ou menos... Peguei muito transito para o trabalho.' },
+    { id: '4', rate: 4, datetime: '', description: 'Hoje meu dia está, mais ou menos... Peguei muito transito para o trabalho.' },
+    { id: '5', rate: 5, datetime: '', description: 'Hoje meu dia está, mais ou menos... Peguei muito transito para o trabalho.' },
+    { id: '6', rate: 5, datetime: '', description: 'Hoje meu dia está, mais ou menos... Peguei muito transito para o trabalho.' },
+    { id: '7', rate: 5, datetime: '', description: 'Hoje meu dia está, mais ou menos... Peguei muito transito para o trabalho.' },
+    { id: '8', rate: 5, datetime: '', description: 'Hoje meu dia está, mais ou menos... Peguei muito transito para o trabalho.' },
+  ]);
 
 
   useEffect(() => {
@@ -39,40 +56,26 @@ export const HomePage = () => {
     <>
       <Header name={name} />
 
-      {/* <View style={styles.emptyContentContainer}>
-        <Text style={styles.emptyContentText}>
-          Você ainda não{'\n'}
-          registrou seu humor!
-        </Text>
-      </View> */}
-
-      <View style={styles.listContent}>
-        <ListItem
-          rate={1}
-          datetime=''
-          description='Hoje meu dia está, mais ou menos... Peguei muito transito para o trabalho.'
-        />
-        <ListItem
-          rate={2}
-          datetime=''
-          description='Hoje meu dia está, mais ou menos... Peguei muito transito para o trabalho.'
-        />
-        <ListItem
-          rate={3}
-          datetime=''
-          description='Hoje meu dia está, mais ou menos... Peguei muito transito para o trabalho.'
-        />
-        <ListItem
-          rate={4}
-          datetime=''
-          description='Hoje meu dia está, mais ou menos... Peguei muito transito para o trabalho.'
-        />
-        <ListItem
-          rate={5}
-          datetime=''
-          description='Hoje meu dia está, mais ou menos... Peguei muito transito para o trabalho.'
-        />
-      </View>
+      <FlatList
+        data={list}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={styles.listContent}
+        renderItem={({ item }) => (
+          <ListItem
+            rate={item.rate}
+            datetime={item.datetime}
+            description={item.description}
+          />
+        )}
+        ListEmptyComponent={(
+          <View style={styles.emptyContentContainer}>
+            <Text style={styles.emptyContentText}>
+              Você ainda não{'\n'}
+              registrou seu humor!
+            </Text>
+          </View>
+        )}
+      />
 
       <Footer>
         <View style={styles.footerContainer}>
@@ -157,7 +160,7 @@ const styles = StyleSheet.create({
 
   listContent: {
     gap: 8,
-    flex: 1,
+    flexGrow: 1,
     paddingVertical: 16,
     paddingHorizontal: 16,
   },
