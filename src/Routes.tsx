@@ -11,7 +11,7 @@ import { HomePage } from './screens/Home';
 
 type TScreenDefinitions = {
   setUserName: undefined;
-  detail: { rate: number };
+  detail: { rate: number, id?: string };
   home: { newName: string } | undefined;
 }
 
